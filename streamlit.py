@@ -8,14 +8,23 @@ from molecule_visualization import molecules, init_session_state
 st.set_page_config(page_title="Chemosynthetic Worlds", page_icon="🌌")
 st.title("Beyond Sunlight: An Aquatic Chemosynthetic World")
 st.subheader("Created by the Astral Architects")
-st.write("NASA Space Apps Challenge 2024")
+st.markdown("**NASA Space Apps Challenge 2024**")
+st.markdown(
+    """Chemosynthetic microbes are the basis of food webs at the site of
+    hydrothermal vents and code seeps. Types of microbes include bacteria and
+    archaea. Rather than utilizing photosynthesis, these organisms rely on
+    chemosynthesis, which is the process of creating sugars using energy that
+    comes from chemical reactions. There is not a singular pathway that defines
+    chemosynthesis, as different microorganisms live at hydrothermal vents and
+    cold seep areas, and use different pathways to get energy from rich chemical
+    water sources that emerge from our world. There is a high concentration of
+    hydrogen sulfide (H2S) from hydrothermal vents, where water temperatures are
+    extremely hot. Methane (CH4) is also common at cold seep sites. Below, you
+    can interact with the different microbe species and see the diversity of
+    roles they play in our ocean world:"""
+)
 st.markdown("---")
 st.subheader("Molecule Viewer")
-st.markdown(
-    """Chemosynthesis is the process by which some organisms use chemical energy
-    to produce carbohydrates. This process occurs in the absence of sunlight
-    and is common in deep-sea hydrothermal vents."""
-)
 st.write(
     """This tool allows you to view the 3D structure of some of the molecules
     involved in chemosynthesis."""
