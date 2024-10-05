@@ -1,7 +1,7 @@
 """Module for visualizing molecules using RDKit and Cirpy."""
 
 import streamlit as st
-# import cirpy
+import cirpy
 import rdkit.Chem as chem
 import base64
 import os
@@ -63,7 +63,7 @@ def init_session_state() -> None:
         print([state for state in st.session_state])
         emoji = st.session_state["emoji_dict"] = dict()
     
-    
+
 
 
 def render_svg(svg: str) -> None:
