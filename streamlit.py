@@ -3,7 +3,7 @@
 import streamlit as st
 import os
 import rdkit.Chem as chem
-from molecule_visualization import molecules, init_session_state
+from molecule_visualization import molecule_to_smiles, init_session_state
 
 st.set_page_config(page_title="Chemosynthetic Worlds", page_icon="🌌")
 st.title("Beyond Sunlight: An Aquatic Chemosynthetic World")
@@ -24,23 +24,24 @@ st.markdown(
     roles they play in our ocean world:"""
 )
 st.markdown("---")
-st.subheader("Molecule Viewer")
-st.write(
-    """This tool allows you to view the 3D structure of some of the molecules
-    involved in chemosynthesis."""
-)
 
-molecule = st.selectbox("Select a molecule to view:", list(molecules.keys()))
+# molecule = st.selectbox("Select a molecule to view:", list(molecules.keys()))
 
-st.image("/Users/keya/Downloads/tubeworms-hires.jpg")
-st.markdown("---")
-st.subheader("Ocean Worlds")
-st.write(
-    """This tool allows you to explore some of the ocean worlds in our solar system
-    that may harbor life."""
-)
-st.markdown("---")
-st.write("Citations: https://zenodo.org/badge/latestdoi/530035520")
+
+
+def write_ocean_worlds():
+    st.subheader("Ocean Worlds")
+    st.write(
+        """This tool allows you to explore some of the ocean worlds in our solar system
+        that may harbor life."""
+    )
+    st.markdown("---")
+    st.write(
+        """Citations: Lucandia. Lucandia/Molecule-Icon-Generator;
+             Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429."""
+    )
+
 
 if __name__ == "__main__":
     init_session_state()
+    write_ocean_worlds()

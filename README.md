@@ -9,3 +9,6 @@ Contributors:
 - Gigi (hongzhi5)
 - KP (sprintingIRL)
 - Elizabeth
+
+Citations: \
+Lucandia. Lucandia/Molecule-Icon-Generator; Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429.

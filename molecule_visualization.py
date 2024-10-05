@@ -29,10 +29,12 @@ smiles_help = (
 ) = """  \n  If you don't know SMILES, check this out: 
                 https://chemicbook.com/2021/02/13/smiles-strings-explained-for-beginners-part-1.html  \n  """
 
+
 def upload_setting_button():
     """Allow to upload setting"""
-    st.session_state['upload_setting'] = True
+    st.session_state["upload_setting"] = True
     return
+
 
 def render_svg(svg: str) -> None:
     """Render the given SVG."""
@@ -52,7 +54,7 @@ def update_molecule() -> None:
     return
 
 
-molecules = {
+molecule_to_smiles = {
     "H2S - hydrogen sulfide": "S",
     "CH4 - methane": "C",
     "NH3 - ammonia": "N",
@@ -133,81 +135,32 @@ def init_session_state() -> None:
     last_atom_size = st.session_state["last_atom_size_but"]
 
     # setting header, description and citation
-    st.header(
-        """
-    Molecule Icon Generator!
-    """
-    )
+    st.header("""3D Molecule Viewer""")
     st.write(
-        """
-    This tool allows you to view the 3D structure of some of the molecules
+    """
+    This tool allows you to view the 3D structures of some of the molecules
     involved in chemosynthesis.
     """
     )
-    st.markdown(
-        """
-For more options and information, check out the 
-[GitHub repository](https://github.com/lmonari5/molecule-icon-generator.git).\\
-[DOI](https://doi.org/10.5281/zenodo.7388429): 10.5281/ZENODO.7388429.
-       """
-    )
 
     # select the input type
-    input_type = st.selectbox(
-        "Create your icon by",
-        [
-            "name",
-            "smiles",
-            "load file",
-            "cas_number",
-            "stdinchi",
-            "stdinchikey",
-            "smiles list",
-        ],
-        on_change=update_molecule,
-        help="""Choose the input info of your molecule. If the app is slow, use SMILES input."""
-        + smiles_help,
-    )
+    input_type = "name"
     # default input for each input_type except 'load file'
     def_dict = {
-        "name": "paracetamol",
-        "smiles": "CC(=O)Nc1ccc(cc1)O",
-        "cas_number": "103-90-2",
-        "stdinchi": "InChI=1S/C8H9NO2/c1-6(10)9-7-2-4-8(11)5-3-7/h2-5,11H,1H3,(H,9,10)",
-        "stdinchikey": "RZVAJINKPMORJF-UHFFFAOYSA-N",
+        "name": "hydrogen sulfide",
+        "smiles": "S",
     }
-
+    
     # load the molecule input
-    if input_type == "load file":  # load the file
-        load_sdf = True
-        smiles_list = False
-        mol_file = st.file_uploader(
-            "Load mol file",
-            type=["sdf", "mol2", "pdb"],
-            on_change=update_molecule,
-            help="Load a file with a molecule structure (supported sdf, mol2 and pdb files)",
-        )
-        st.info("The icon results are highly dependent on the molecule coordinates.")
-    elif input_type == "smiles list":  # load the smile list input
-        smiles_list = True
-        load_sdf = False
-        smiles_list_file = st.file_uploader(
-            "Load the list of SMILES as txt file",
-            type="txt",
-            on_change=update_molecule,
-            help="Load a text file containing a SMILES in each line (encoding utf-8)",
-        )
-    else:  # load the molecule with cirpy
-        load_sdf = False
-        smiles_list = False
-        input_string = st.text_input(
-            input_type + " :",
-            def_dict[input_type],
-            on_change=update_molecule,
-            help=f"Insert the corresponding {input_type} of your molecule",
-        )
+    load_sdf = False
+    smiles_list = False
+    input_string = st.text_input(
+        input_type + " :",
+        def_dict[input_type],
+        on_change=update_molecule,
+        help=f"Insert the corresponding {input_type} of your molecule",
+    )
 
-    place_holder = st.empty()
     # catch error when using the cirpy library
     if not st.session_state["molecules_but"] or st.session_state["update_molecule"]:
         try:
@@ -231,10 +184,6 @@ For more options and information, check out the
                 # end of parsing time
                 end_time = time.time()
                 time_interv = end_time - start_time
-                place_holder.success(
-                    f"Collecting SMILES from molecule {input_type}: %.2f seconds"
-                    % time_interv
-                )
                 if time_interv > 3:
                     # The SMILES of the molecule is parsed from the cirpy library.
                     st.info(
@@ -250,47 +199,13 @@ For more options and information, check out the
             error_txt += smiles_help
             st.error(error_txt)
             st.stop()
-    else:
-        if input_type != "smiles":
-            place_holder.success("Molecule structure already collected")
-
-    # load settings
-    load_settings = st.checkbox(
-        "Upload previous settings",
-        help="""If you have saved a "molecule_icon_settings.json" file, you can upload it 
-                                     and use the same settings. You can save the settings with the button at the 
-                                     end of the page""",
-    )  # using checkbox to save space, in case doesn't want to save settings
-    if load_settings:
-        saved_setting = st.file_uploader(
-            "Upload previous settings (optional):",
-            on_change=upload_setting_button,
-            type="json",
-            help="""If you have saved a "molecule_icon_settings.json" file, you can upload it 
-                                                 and use the same settings. You can save the settings with the button at the 
-                                                 end of the page""",
-        )
-        if saved_setting and st.session_state["upload_setting"]:
-            # To read file as bytes:
-            session_old = json.load(saved_setting)
-            for key, value in session_old.items():
-                st.session_state[key] = value
-            # check if these keys are present in resize dict for compatibility with old setting
-            if "Bond" not in st.session_state["resize_dict"]:
-                st.session_state["resize_dict"]["Bond"] = 1
-            if "Bond spacing" not in st.session_state["resize_dict"]:
-                st.session_state["resize_dict"]["Bond spacing"] = 1
-            if "Outline" not in st.session_state["resize_dict"]:
-                st.session_state["resize_dict"]["Outline"] = 1
-            st.session_state["upload_setting"] = False
-            st.experimental_rerun()
 
     # select conformation and output format
     col1, col2 = st.columns(2, gap="medium")
     # select whether to se a 2D or 3D conformation
     with col1:
         dimension = st.selectbox(
-            "Build a structure:",
+            "Structure type:",
             ["2D", "3D", "3D interactive"],
             key="dimension_type",
             on_change=update_molecule,
@@ -343,14 +258,6 @@ For more options and information, check out the
                     on_change=update_molecule,
                     help="""Choose the random seed to generate the molecule. A value of -1 will 
                                                     generate a random structure every time the app is running""",
-                )
-        else:
-            with col1:
-                conf = not st.checkbox(
-                    "Switch conformation",
-                    key="switch_conf",
-                    on_change=update_molecule,
-                    value=False,
                 )
 
     # try to build the mol structure
@@ -432,7 +339,7 @@ For more options and information, check out the
             single_bonds = st.checkbox("Single bonds", key="single_bonds")
 
     # add emojis
-    activate_emoji = st.checkbox("Use emoji", key="use_emoji")
+    activate_emoji = None
     if activate_emoji:
         atom_and_index = list(range(molecules[0].GetNumAtoms())) + list(
             atom_resize.keys()
@@ -548,7 +455,7 @@ For more options and information, check out the
 
     # change the size of the icon (single atoms, all atoms or bonds)
     change_size = st.checkbox(
-        "Change atom size, bond and outline thickness", key="change_size_check"
+        "Change atom, bond, and outline size", key="change_size_check"
     )
     if change_size:
         col1, col2, col3 = st.columns(3, gap="medium")
@@ -601,9 +508,9 @@ For more options and information, check out the
     with col1:
         pos_multi = st.slider(
             "Image size multiplier",
-            0,
+            200,
             900,
-            300,
+            400,
             key="size_multi_slider",
             help="""Multiply the position of the atoms with respect to the 2D structure.
                               A higher multiplier leads to higher resolution.""",
