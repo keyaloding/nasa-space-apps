@@ -22,9 +22,10 @@ st.markdown(
     can interact with the different microbe species and see the diversity of
     roles they play in our ocean world:"""
 )
+st.image("./website_images/hydro.jpeg")
 st.markdown("---")
-
 write_chemo_data()
+st.image("./website_images/tubeworms-hires.jpg")
 st.markdown("---")
 web_and_chemo_data()
 st.markdown("---")

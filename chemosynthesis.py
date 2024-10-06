@@ -4,7 +4,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 def write_chemo_data():
-    st.header("Organisms Preview")
+    st.header("Organism Preview")
     df = pd.DataFrame(
         [
             {
@@ -84,8 +84,9 @@ def web_and_chemo_data():
         st.session_state['organisms'] = pd.DataFrame(columns=['Name', 'Type'])
 
     type_options = ['Microbial', 'Fungus-Like Organism', 'Filter Feeder', 'Mollusk', 'Zooplankton', 'Echinoderm']
-    name = st.text_input('Organism Name:')
-    type_selected = st.selectbox('Type:', type_options)
+    st.header('Food Web Builder')
+    name = st.text_input('Enter an organism name:')
+    type_selected = st.selectbox('Choose the organism type:', type_options)
 
     # Button to submit the new organism
     if st.button('Add Organism'):
@@ -106,8 +107,6 @@ def web_and_chemo_data():
     st.subheader('Current Organisms')
     st.dataframe(st.session_state['organisms'])
 
-    # Create a food web graph
-    st.subheader('Food Web Builder')
 
     # Input for predator and prey relationships
     predator = st.selectbox('Select Predator:', st.session_state['organisms']['Name'].tolist())
