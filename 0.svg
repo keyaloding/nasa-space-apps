@@ -1,17 +1,17 @@
 <svg id="molecule_icon" viewBox="-546.4101615137754 -546.4101615137754 1092.8203230275508 1092.8203230275508" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<defs>
 		<g id="S">
-			<circle cx="0" cy="0" r="100.0" fill="#FFFF30" stroke="#818118" stroke-width="10.0" />
-			<path d="M70,-70 A90.0,90.0 0, 1, 1 -70,70 M-70,70 A120.0,120.0 0, 0,0 70, -70 Z" fill="#818118" stroke-width="0" />
+			<circle cx="0" cy="0" r="100.0" fill="#FFFF30" stroke="#bfbf24" stroke-width="10.0" />
+			<path d="M70,-70 A90.0,90.0 0, 1, 1 -70,70 M-70,70 A120.0,120.0 0, 0,0 70, -70 Z" fill="#bfbf24" stroke-width="0" />
 		</g>
 		<g id="H">
-			<circle cx="0" cy="0" r="100.0" fill="#FFFFFF" stroke="#828282" stroke-width="10.0" />
-			<path d="M70,-70 A90.0,90.0 0, 1, 1 -70,70 M-70,70 A120.0,120.0 0, 0,0 70, -70 Z" fill="#828282" stroke-width="0" />
+			<circle cx="0" cy="0" r="100.0" fill="#FFFFFF" stroke="#bfbfbf" stroke-width="10.0" />
+			<path d="M70,-70 A90.0,90.0 0, 1, 1 -70,70 M-70,70 A120.0,120.0 0, 0,0 70, -70 Z" fill="#bfbfbf" stroke-width="0" />
 		</g>
 	</defs>
-	<line stroke="#4d4d4d" stroke-linecap="round" stroke-width="45.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="346.41016151377545" y2="-66.66666666666661" />
+	<line stroke="#717171" stroke-linecap="round" stroke-width="45.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="346.41016151377545" y2="-66.66666666666661" />
 	<line stroke="#979797" stroke-linecap="round" stroke-width="25.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="346.41016151377545" y2="-66.66666666666661" />
-	<line stroke="#4d4d4d" stroke-linecap="round" stroke-width="45.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="-346.41016151377545" y2="-66.66666666666676" />
+	<line stroke="#717171" stroke-linecap="round" stroke-width="45.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="-346.41016151377545" y2="-66.66666666666676" />
 	<line stroke="#979797" stroke-linecap="round" stroke-width="25.0" x1="-3.9474596431116676e-14" y1="133.33333333333334" x2="-346.41016151377545" y2="-66.66666666666676" />
 	<use href="#S" xlink:href="#S" transform="translate(-3.9474596431116676e-14 133.33333333333334)" />
 	<use href="#H" xlink:href="#H" transform="translate(346.41016151377545 -66.66666666666661)" />

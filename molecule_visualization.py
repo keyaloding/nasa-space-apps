@@ -7,6 +7,7 @@ import base64
 import os
 import json
 import warnings
+import pandas as pd
 import shutil
 import time
 from molecule_icon_generator import (
@@ -44,12 +45,8 @@ def render_svg(svg: str) -> None:
     return
 
 
-def upload_setting() -> None:
-    st.session_state["upload_setting"] = True
-    return
-
-
 def update_molecule() -> None:
+    """Updates the molecule."""
     st.session_state["update_molecule"] = True
     return
 
@@ -137,7 +134,7 @@ def init_session_state() -> None:
     # setting header, description and citation
     st.header("""3D Molecule Viewer""")
     st.write(
-    """
+        """
     This tool allows you to view the 3D structures of some of the molecules
     involved in chemosynthesis.
     """
@@ -150,7 +147,7 @@ def init_session_state() -> None:
         "name": "hydrogen sulfide",
         "smiles": "S",
     }
-    
+
     # load the molecule input
     load_sdf = False
     smiles_list = False
@@ -160,7 +157,10 @@ def init_session_state() -> None:
         on_change=update_molecule,
         help=f"Insert the corresponding {input_type} of your molecule",
     )
-
+    inp = st.selectbox(
+        "Select a molecule:",
+        list(molecule_to_smiles.keys()),
+    )
     # catch error when using the cirpy library
     if not st.session_state["molecules_but"] or st.session_state["update_molecule"]:
         try:
@@ -263,58 +263,20 @@ def init_session_state() -> None:
     # try to build the mol structure
     if not st.session_state["molecules_but"] or st.session_state["update_molecule"]:
         try:
-            molecules = list()
-            if load_sdf and mol_file:
-                if ".sdf" in mol_file.name:
-                    molecule = chem.MolFromMolBlock(mol_file.read(), sanitize=False)
-                elif ".mol2" in mol_file.name:
-                    molecule = chem.MolFromMol2Block(mol_file.read(), sanitize=False)
-                elif ".pdb" in mol_file.name:
-                    molecule = chem.MolFromPDBBlock(mol_file.read(), sanitize=False)
-                partial_sanitize(molecule)
-                molecules.append(molecule)
-            elif load_sdf and not mol_file:
-                st.stop()
-            elif smiles_list and smiles_list_file:
-                for line in smiles_list_file.readlines():
-                    smiles = str(line, "utf-8").strip()
-                    if smiles == "":  # skip empty lines
-                        continue
-                    try:
-                        molecule = parse_structure(
-                            smiles,
-                            nice_conformation=conf,
-                            dimension_3=dimension_3,
-                            force_field=f_field,
-                            randomseed=rand_seed,
-                        )
-                        molecules.append(molecule)
-                    except:
-                        st.warning(f"Failed building SMILES: {str(smiles)}")
-            elif smiles_list and not smiles_list_file:
-                st.stop()
-            else:
-                molecule = parse_structure(
-                    smiles,
-                    nice_conformation=conf,
-                    dimension_3=dimension_3,
-                    force_field=f_field,
-                    randomseed=rand_seed,
-                )
-                molecules.append(molecule)
+            molecules = []
+            molecule = parse_structure(
+                smiles,
+                nice_conformation=conf,
+                dimension_3=dimension_3,
+                force_field=f_field,
+                randomseed=rand_seed,
+            )
+            molecules.append(molecule)
             st.session_state["molecules_but"] = molecules
-        except Exception as e:
-            print(e)  # print error in console
+        except Exception as err:
+            print(f"An error occured {err}")  # print error in console
             error_txt = f"""
                 Rdkit failed in building the structure of the molecule."""
-            if input_type != "smiles":
-                error_txt += (
-                    f" \n  Try to use the SMILES instead of {input_type} as input."
-                )
-                error_txt += smiles_help
-            elif input_type == "smiles" and "H" in smiles:
-                error_txt += "  \n  If you have written Hydrogen atoms in the SMILES, try to remove them."
-                error_txt += smiles_help
             st.error(error_txt)
             st.stop()
 
@@ -521,7 +483,7 @@ def init_session_state() -> None:
                 "Shadow/outline light",
                 0.0,
                 1.0,
-                1 / 3,
+                0.75,
                 key="outline_slider",
                 help="""Regulate the brightness of the shadow""",
             )
