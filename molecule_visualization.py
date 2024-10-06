@@ -685,4 +685,4 @@ def init_session_state() -> None:
         session_dict = {
             key: st.session_state[key] for key in st.session_state if "but" not in key
         }
-        json.dump(session_dict, settings)
+        # json.dump(session_dict, settings)

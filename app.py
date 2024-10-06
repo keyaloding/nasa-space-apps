@@ -2,7 +2,7 @@
 
 import streamlit as st
 from molecule_visualization import init_session_state
-from chemosynthesis import write_chemo_data
+from chemosynthesis import write_chemo_data, web_and_chemo_data
 
 st.set_page_config(page_title="Chemosynthetic Worlds", page_icon="🌌")
 st.title("Beyond Sunlight: An Aquatic Chemosynthetic World")
@@ -25,6 +25,8 @@ st.markdown(
 st.markdown("---")
 
 write_chemo_data()
+st.markdown("---")
+web_and_chemo_data()
 st.markdown("---")
 init_session_state()
 st.markdown("---")
