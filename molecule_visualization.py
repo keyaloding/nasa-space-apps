@@ -21,10 +21,8 @@ loading_err = KeyError(
         Please reload the page"
 )
 
-smiles_help = (
-    smiles_help
-) = """  \n  If you don't know SMILES, check this out: 
-                https://chemicbook.com/2021/02/13/smiles-strings-explained-for-beginners-part-1.html  \n  """
+smiles_help = """See the following guide for mode information on SMILES:  \n
+https://chemicbook.com/2021/02/13/smiles-strings-explained-for-beginners-part-1.html"""
 
 
 def upload_setting_button():
@@ -47,15 +45,16 @@ def update_molecule() -> None:
     return
 
 
-molecule_to_smiles = {
-    "H2S - hydrogen sulfide": "S",
-    "CH4 - methane": "C",
-    "NH3 - ammonia": "N",
-    "H2O - water": "O",
-    "CO2 - carbon dioxide": "C(=O)=O",
-    "O2 - oxygen": "O=O",
-    "C6H12O6 - glucose": "C(C1C(C(C(C(O1)O)O)O)O)O",
-}
+molecules_list = [
+    "Hydrogen sulfide",
+    "Methane",
+    "Ammonia",
+    "Water",
+    "Carbon dioxide",
+    "Oxygen",
+    "Glucose",
+    "Other (enter below)",
+]
 
 
 def init_session_state() -> None:
@@ -145,54 +144,35 @@ def init_session_state() -> None:
     }
 
     # load the molecule input
-    load_sdf = False
     smiles_list = False
-    input_string = st.text_input(
-        input_type + " :",
-        def_dict[input_type],
-        on_change=update_molecule,
-        help=f"Insert the corresponding {input_type} of your molecule",
-    )
-    inp = st.selectbox(
+    input_string = st.selectbox(
         "Select a molecule:",
-        list(molecule_to_smiles.keys()),
+        molecules_list,
+        on_change=update_molecule,
     )
-    # catch error when using the cirpy library
+    if input_string == "Oxygen":
+        input_string = "O=O"
+    elif input_string == "Other (enter below)":
+        input_string = st.text_input("Enter the molecule name:", value="Sulfuric acid")
+
     if not st.session_state["molecules_but"] or st.session_state["update_molecule"]:
         try:
-            if (
-                input_type == "smiles"
-            ):  # if the input is a smile, use it directly ignoring the cirpy smiles
-                smiles = input_string
-            elif load_sdf:
-                pass
-            elif smiles_list:
-                pass
-            else:
-                start_time = time.time()
-                with st.spinner(
-                    text=f"Collecting structure from molecule {input_type}..."
-                ):
-                    if input_type == "name":
-                        input_string = cirpy.resolve(input_string, "smiles")
-                    mol = cirpy.Molecule(input_string)
-                    smiles = mol.smiles
-                # end of parsing time
-                end_time = time.time()
-                time_interv = end_time - start_time
-                if time_interv > 3:
-                    # The SMILES of the molecule is parsed from the cirpy library.
-                    st.info(
-                        """If the app is slow, use SMILES input.""" + smiles_help,
-                        icon="🏎",
-                    )
+            start_time = time.time()
+            with st.spinner(text=f"Collecting structure from molecule {input_type}..."):
+                if input_type == "name":
+                    input_string = cirpy.resolve(input_string, "smiles")
+                mol = cirpy.Molecule(input_string)
+                smiles = mol.smiles
+            # end of parsing time
+            end_time = time.time()
+            if end_time - start_time > 3:
+                st.info("""If the app is slow, use SMILES input.""" + smiles_help)
         except Exception as e:
             print(e)  # print error in console
             error_txt = f"""
-                The cirpy python library is not able to resolve your input {input_type}.  \n  You can use SMILES to 
-                skip the cirpy library.  \n  
-                """
-            error_txt += smiles_help
+                The cirpy python library is not able to resolve your input
+                {input_type}. \n  You can use SMILES to skip the cirpy library.
+                """ + smiles_help
             st.error(error_txt)
             st.stop()
 

@@ -2,7 +2,7 @@
 
 import streamlit as st
 import pandas as pd
-from molecule_visualization import molecule_to_smiles, init_session_state
+from molecule_visualization import init_session_state
 
 st.set_page_config(page_title="Chemosynthetic Worlds", page_icon="🌌")
 st.title("Beyond Sunlight: An Aquatic Chemosynthetic World")
