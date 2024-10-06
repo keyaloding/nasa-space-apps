@@ -16,7 +16,7 @@ from molecule_icon_generator import (
     emoji_periodic_table,
 )
 
-loading_err = KeyError(
+init_error = KeyError(
     "The app encountered an error while initializing the session. \
         Please reload the page"
 )
@@ -45,17 +45,15 @@ def update_molecule() -> None:
     return
 
 
-molecules_list = [
-    "Hydrogen sulfide",
-    "Methane",
-    "Ammonia",
-    "Water",
-    "Carbon dioxide",
-    "Oxygen",
-    "Glucose",
-    "Other (enter below)",
-]
-
+molecule_images = {
+    "Hydrogen sulfide": "./reaction_images/hydrogen_sulfide.png",
+    "Methane": "./reaction_images/methane.png",
+    "Ammonia": "./reaction_images/ammonia.png",
+    "Water": "./reaction_images/water.png",
+    "Carbon dioxide": "./reaction_images/hydrogen_sulfide.png",
+    "Oxygen": "./reaction_images/ammonia.png",
+    "Glucose": "./reaction_images/hydrogen_sulfide.png",
+}
 
 def init_session_state() -> None:
     # initialize session state
@@ -86,21 +84,21 @@ def init_session_state() -> None:
     if "color_dict" in st.session_state:
         new_color = st.session_state["color_dict"]
     else:
-        st.exception(loading_err)
+        st.exception(init_error)
         print([i for i in st.session_state])
         st.session_state["color_dict"] = color_map.copy()
         new_color = st.session_state["color_dict"]
     if "resize_dict" in st.session_state:
         resize = st.session_state["resize_dict"]
     else:
-        st.exception(loading_err)
+        st.exception(init_error)
         print([i for i in st.session_state])
         st.session_state["resize_dict"] = atom_resize.copy()
         resize = st.session_state["resize_dict"]
     if "emoji_dict" in st.session_state:
         emoji = st.session_state["emoji_dict"]
     else:
-        st.exception(loading_err)
+        st.exception(init_error)
         print([i for i in st.session_state])
         st.session_state["emoji_dict"] = dict()
         emoji = st.session_state["emoji_dict"]
@@ -147,7 +145,7 @@ def init_session_state() -> None:
     smiles_list = False
     input_string = st.selectbox(
         "Select a molecule:",
-        molecules_list,
+        list(molecule_images.keys()) + ["Other (enter below)"],
         on_change=update_molecule,
     )
     if input_string == "Oxygen":
@@ -607,11 +605,6 @@ def init_session_state() -> None:
                                               {img_format} snapshots with the camera button""",
                 )
         else:
-            st.write(
-                """
-                Image SVG preview:
-                """
-            )
             col1, col2 = st.columns(2)
             with col1:
                 f = open("0.svg", "r")
@@ -625,6 +618,16 @@ def init_session_state() -> None:
                     file_name="molecule_icon." + img_format,
                     mime=f"image/{img_format}",
                 )
+            if input_string in molecule_images:
+                molecule_image = molecule_images[input_string]
+                st.write("")
+                st.markdown(
+                    """<p style='text-align: center; font-size: 20px;'>
+                    Relevant chemical reaction:
+                    </p>""",
+                    unsafe_allow_html=True,
+                )
+                st.image(molecule_image)
         with col2:  # generale col 2 in each case
             if rdkit_draw:
                 f = open("0_rdkit.svg", "r")

@@ -6,6 +6,12 @@ from molecule_visualization import init_session_state
 
 st.set_page_config(page_title="Chemosynthetic Worlds", page_icon="🌌")
 st.title("Beyond Sunlight: An Aquatic Chemosynthetic World")
+# st.markdown("""
+# <style>
+#     body {
+#     background-color: #f0f0f0;
+#     }
+# </style>""")
 st.subheader("Created by the Astral Architects")
 st.markdown("**NASA Space Apps Challenge 2024**")
 st.markdown(
@@ -164,8 +170,8 @@ if __name__ == "__main__":
     st.markdown("---")
     init_session_state()
     st.markdown("---")
-    write_ocean_worlds()
-    st.markdown("---")
+    # write_ocean_worlds()
+    # st.markdown("---")
     st.markdown(
         """**Citations**: Lucandia. Lucandia/Molecule-Icon-Generator;
              Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429."""
