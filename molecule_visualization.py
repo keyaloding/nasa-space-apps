@@ -46,14 +46,15 @@ def update_molecule() -> None:
 
 
 molecule_images = {
-    "Hydrogen sulfide": "./reaction_images/hydrogen_sulfide.png",
-    "Methane": "./reaction_images/methane.png",
-    "Ammonia": "./reaction_images/ammonia.png",
-    "Water": "./reaction_images/water.png",
-    "Carbon dioxide": "./reaction_images/hydrogen_sulfide.png",
-    "Oxygen": "./reaction_images/ammonia.png",
-    "Glucose": "./reaction_images/hydrogen_sulfide.png",
+    "Hydrogen sulfide": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
+    "Methane": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/methane.png",
+    "Ammonia": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/ammonia.png",
+    "Water": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/water.png",
+    "Carbon dioxide": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
+    "Oxygen": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/ammonia.png",
+    "Glucose": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
 }
+
 
 def init_session_state() -> None:
     # initialize session state
@@ -627,7 +628,12 @@ def init_session_state() -> None:
                     </p>""",
                     unsafe_allow_html=True,
                 )
-                st.image(molecule_image)
+                st.markdown(
+                    f"""<div style='text-align: center;'>
+                    <img src={molecule_image} width='300'>
+                    </div>""",
+                    unsafe_allow_html=True,
+                )
         with col2:  # generale col 2 in each case
             if rdkit_draw:
                 f = open("0_rdkit.svg", "r")
