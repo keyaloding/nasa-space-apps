@@ -2,17 +2,13 @@
 
 import streamlit as st
 import cirpy
-import rdkit.Chem as chem
 import base64
 import os
 import json
-import warnings
-import pandas as pd
 import shutil
 import time
 from molecule_icon_generator import (
     parse_structure,
-    partial_sanitize,
     color_map,
     atom_resize,
     icon_print,
@@ -132,11 +128,11 @@ def init_session_state() -> None:
     last_atom_size = st.session_state["last_atom_size_but"]
 
     # setting header, description and citation
-    st.header("""3D Molecule Viewer""")
+    st.header("""2D/3D Molecule Viewer""")
     st.write(
         """
-    This tool allows you to view the 3D structures of some of the molecules
-    involved in chemosynthesis.
+    This tool allows you to view the 2D and 3D structures of some of the
+    molecules involved in chemosynthesis.
     """
     )
 

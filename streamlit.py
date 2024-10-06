@@ -31,51 +31,43 @@ def write_ocean_worlds():
         """This tool allows you to explore some of the ocean worlds in our solar system
         that may harbor life."""
     )
-    st.markdown("---")
-    st.write(
-        """Citations: Lucandia. Lucandia/Molecule-Icon-Generator;
-             Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429."""
-    )
 
 
 def chemo_data():
-    # User Filters
-    st.sidebar.header("Filters")
-    data = [
-        {
-            "name": "Sulfolobus solfataricus",
-            "type": "Microbial",
-            "energy_source": "Sulfur and oxygen",
-            "habitat": "High-temperature, acidic hot springs.",
-        },
-        {
-            "name": "Riftia pachyptila",
-            "type": "Invertebrate",
-            "energy_source": "Bacterial conversion of hydrogen sulfide",
-            "habitat": "Deep-sea hydrothermal vents",
-        },
-        # Add more organisms...
-    ]
-
-    df = pd.DataFrame(data)
-    # Filter by Type
-    type_filter = st.sidebar.multiselect(
-        "Select Type", options=df["type"].unique(), default=df["type"].unique().tolist()
+    st.header("Organisms Preview")
+    df = pd.DataFrame(
+        [
+            {
+                "name": "Sulfolobus solfataricus",
+                "type": "Microbial",
+                "energy_source": "Sulfur and oxygen",
+                "habitat": "Hot springs",
+            },
+            {
+                "name": "Riftia pachyptila",
+                "type": "Invertebrate",
+                "energy_source": "Hydrogen sulfide",
+                "habitat": "Hydrotherm. vents",
+            },
+            # Add more organisms...
+        ]
     )
 
-    energy_sources = []
-    for species in data:
-        energy_sources.append(species["energy_source"])
-    
+    type_filter = st.multiselect(
+        "Select Organism Type",
+        options=df["type"].unique(),
+        default=df["type"].unique().tolist(),
+    )
+
     # Filter by Energy Source
-    energy_filter = st.sidebar.multiselect(
+    energy_filter = st.multiselect(
         "Select Energy Source",
         options=df["energy_source"].unique(),
         default=df["energy_source"].unique().tolist(),
     )
 
     # Filter by Habitat
-    habitat_filter = st.sidebar.multiselect(
+    habitat_filter = st.multiselect(
         "Select Habitat",
         options=df["habitat"].unique(),
         default=df["habitat"].unique().tolist(),
@@ -88,21 +80,17 @@ def chemo_data():
         & (df["habitat"].isin(habitat_filter))
     ]
 
-    # Display the results
-    st.header("Organisms Preview")
     st.write(filtered_data)
-
-    # Optionally: Display details of selected organisms
-    if not filtered_data.empty:
-        for _, row in filtered_data.iterrows():
-            st.subheader(row["name"])
-            st.write(f"**Type:** {row['type']}")
-            st.write(f"**Energy Source:** {row['energy_source']}")
-            st.write(f"**Habitat:** {row['habitat']}")
 
 
 if __name__ == "__main__":
     chemo_data()
     st.markdown("---")
     init_session_state()
-    # write_ocean_worlds()
+    st.markdown("---")
+    write_ocean_worlds()
+    st.markdown("---")
+    st.markdown(
+        """**Citations**: Lucandia. Lucandia/Molecule-Icon-Generator;
+             Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429."""
+    )
