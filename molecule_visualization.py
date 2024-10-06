@@ -169,10 +169,13 @@ def init_session_state() -> None:
                 st.info("""If the app is slow, use SMILES input.""" + smiles_help)
         except Exception as e:
             print(e)  # print error in console
-            error_txt = f"""
+            error_txt = (
+                f"""
                 The cirpy python library is not able to resolve your input
                 {input_type}. \n  You can use SMILES to skip the cirpy library.
-                """ + smiles_help
+                """
+                + smiles_help
+            )
             st.error(error_txt)
             st.stop()
 
