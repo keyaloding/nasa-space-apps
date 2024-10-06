@@ -13,9 +13,9 @@ To run the streamlit app for learning about the chemical reactions involved in
 chemosynthesis or the organisms that rely on it, clone the repository, set
 it to your working directory and run the following commands in the terminal: \
 `pip install -r requirements.txt` \
-`streamlit run streamlit.py` \
+`streamlit run app.py` \
 If this does not work on your device, try running: \
-`python -m streamlit run streamlit.py`
+`python -m streamlit run app.py`
 
 Citations: \
 Lucandia. Lucandia/Molecule-Icon-Generator; Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429.
