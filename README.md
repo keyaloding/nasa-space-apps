@@ -10,8 +10,9 @@ Contributors:
 - KP (sprintingIRL)
 
 To run the streamlit app for learning about the chemical reactions involved in
-chemosynthesis or the organisms that rely on it, clone the repository and run
-the following command in the terminal: \
+chemosynthesis or the organisms that rely on it, clone the repository, set
+it to your working directory and run the following commands in the terminal: \
+`pip install -r requirements.txt` \
 `streamlit run streamlit.py` \
 If this does not work on your device, try running: \
 `python -m streamlit run streamlit.py`
