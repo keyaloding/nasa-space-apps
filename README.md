@@ -1,7 +1,6 @@
 # Beyond Sunlight: An Aquatic Chemosynthetic World
-**NASA Space Apps 2024 Challenge**\
-Team: Astral Architects\
-\
+**NASA Space Apps 2024 Challenge**
+### Team: Astral Architects
 Contributors:
 - Keya Loding (keyaloding)
 - Lily Liu (kyoonx)
@@ -9,13 +8,16 @@ Contributors:
 - Gigi (hongzhi5)
 - KP (sprintingIRL)
 
-To run the streamlit app for learning about the chemical reactions involved in
-chemosynthesis or the organisms that rely on it, clone the repository, set
-it to your working directory and run the following commands in the terminal: \
-`pip install -r requirements.txt` \
-`streamlit run app.py` \
-If this does not work on your device, try running: \
-`python -m streamlit run app.py`
+## Installation and Rendering
+```
+git clone https://github.com/keyaloding/nasa-space-apps.git
+cd nasa-space-apps
+pip install -r requirements.txt
+```
+If this does not work on your device, try running:
+```
+python -m streamlit run app.py
+```
 
 Citations: \
 Lucandia. Lucandia/Molecule-Icon-Generator; Zenodo, 2022. https://doi.org/10.5281/ZENODO.7388429.

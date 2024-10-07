@@ -4,7 +4,6 @@ import streamlit as st
 import cirpy
 import base64
 import os
-import json
 import shutil
 import time
 from molecule_icon_generator import (
@@ -46,13 +45,13 @@ def update_molecule() -> None:
 
 
 molecule_images = {
-    "Hydrogen sulfide": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
-    "Methane": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/methane.png",
-    "Ammonia": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/ammonia.png",
-    "Water": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/water.png",
-    "Carbon dioxide": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
-    "Oxygen": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/ammonia.png",
-    "Glucose": "https://github.com/keyaloding/nasa-space-apps/blob/main/reaction_images/hydrogen_sulfide.png",
+    "Hydrogen sulfide": "./reaction_images/hydrogen_sulfide.png",
+    "Methane": "./reaction_images/methane.png",
+    "Ammonia": "./reaction_images/ammonia.png",
+    "Water": "./reaction_images/water.png",
+    "Carbon dioxide": "./reaction_images/hydrogen_sulfide.png",
+    "Oxygen": "./reaction_images/ammonia.png",
+    "Glucose": "./reaction_images/hydrogen_sulfide.png",
 }
 
 
@@ -672,17 +671,9 @@ def init_session_state() -> None:
         # download zip button
         filename = "molecules-icons.zip"
         with open(filename, "rb") as file:
-            btn = st.download_button(
+            _ = st.download_button(
                 label="Download icons zip",
                 data=file,
                 file_name="molecules-icons.zip",
                 mime=f"image/{img_format}",
             )
-
-    # save settings and allow download
-    with open("molecule_icon_settings.json", "w") as settings:
-        # cannot save session state as it is, I have to convert it to a dictionary
-        session_dict = {
-            key: st.session_state[key] for key in st.session_state if "but" not in key
-        }
-        # json.dump(session_dict, settings)
