@@ -136,11 +136,11 @@ def web_and_chemo_data():
     st.header("Interactive Chemosynthesis Simulation")
 
     # Description
-    st.write("""
+    st.markdown("""
     Astral Aurelia's floor include many hydothermal vents, which are huge chimney-like structures that emit heated water rich in minerals.
     These serve as hotspots for biodiversity, where life thrives in extreme temperatures and pressures.
     In this simulation, we explore how vent bacteria oxidize hydrogen sulfide in hydrothermal vents to produce energy.
-    The chemical equation governing this process is:
+    The chemical equation governing this process is:  
     **CO₂ + 4H₂S + O₂ → CH₂O + 4S + 3H₂O**
     """)
 

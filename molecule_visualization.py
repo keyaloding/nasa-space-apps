@@ -44,14 +44,14 @@ def update_molecule() -> None:
     return
 
 
-molecule_images = {
-    "Hydrogen sulfide": "./reaction_images/hydrogen_sulfide.png",
-    "Methane": "./reaction_images/methane.png",
-    "Ammonia": "./reaction_images/ammonia.png",
-    "Water": "./reaction_images/water.png",
-    "Carbon dioxide": "./reaction_images/hydrogen_sulfide.png",
-    "Oxygen": "./reaction_images/ammonia.png",
-    "Glucose": "./reaction_images/hydrogen_sulfide.png",
+molecule_reactions = {
+    "Hydrogen sulfide": "12H2S + 6CO2 -> C6H12O6 + 6H2O + 12S",
+    "Methane": "CH4 + 2O2 -> CO2 + 2H2O",
+    "Ammonia": "NH3 + O2 -> NO2- + 3H+ + 2e-",
+    "Water": "2H2 + O2 -> 2H2O",
+    "Carbon dioxide": "12H2S + 6CO2 -> C6H12O6 + 6H2O + 12S",
+    "Oxygen": "NH3 + O2 -> NO2- + 3H+ + 2e-",
+    "Glucose": "12H2S + 6CO2 -> C6H12O6 + 6H2O + 12S",
 }
 
 
@@ -145,7 +145,7 @@ def init_session_state() -> None:
     smiles_list = False
     input_string = st.selectbox(
         "Select a molecule:",
-        list(molecule_images.keys()) + ["Other (enter below)"],
+        list(molecule_reactions.keys()) + ["Other (enter below)"],
         on_change=update_molecule,
     )
     if input_string == "Oxygen":
@@ -618,8 +618,8 @@ def init_session_state() -> None:
                     file_name="molecule_icon." + img_format,
                     mime=f"image/{img_format}",
                 )
-            if input_string in molecule_images:
-                molecule_image = molecule_images[input_string]
+            if input_string in molecule_reactions:
+                reaction = molecule_reactions[input_string]
                 st.write("")
                 st.markdown(
                     """<p style='text-align: center; font-size: 20px;'>
@@ -629,7 +629,7 @@ def init_session_state() -> None:
                 )
                 st.markdown(
                     f"""<div style='text-align: center;'>
-                    <img src={molecule_image} width='300'>
+                    {reaction}
                     </div>""",
                     unsafe_allow_html=True,
                 )
