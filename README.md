@@ -14,7 +14,9 @@ Contributors:
 
 ## Installation and Rendering
 
-```python
+In the terminal, run:
+
+```CLI
 git clone https://github.com/keyaloding/nasa-space-apps.git
 cd nasa-space-apps
 pip install -r requirements.txt
